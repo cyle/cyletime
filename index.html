@@ -1,0 +1,107 @@
+<!doctype html>
+<html>
+<head>
+<title>CyleTime</title>
+<link href='http://fonts.googleapis.com/css?family=Lato:300,300italic' rel='stylesheet' type='text/css'>
+<style type="text/css">
+* {
+    padding: 0;
+    margin: 0;
+}
+body {
+    font-family: "Lato", Helvetica, sans-serif;
+    font-size: 16px;
+    font-weight: 300;
+    text-align: center;
+    background-image: url('cyle.jpg');
+    background-repeat: no-repeat;
+    background-position: center -230px;
+}
+div#the-cover {
+    background-color: rgba(255, 255, 255, 0.8);
+}
+div#the-time {
+    margin-top: 125px;
+    font-size: 2em;
+}
+div#the-time, div#the-explanation {
+    padding: 0.4em;
+}
+</style>
+</head>
+<body>
+<div id="the-cover">
+<div id="the-time">Monday, April 12th, 1987, 6:00 AM</div>
+<div id="the-explanation">
+    <p>Cyle Gage was born on April 12th, 1987, around 6:00 AM EST.</p>
+    <p>For every second for us that he has been alive, <i>two seconds</i> have elapsed for him.</p>
+    <p>His heart beats faster. Time <i>moves</i> faster.</p>
+    <p>This is the time he is currently experiencing.</p>
+</div>
+</div>
+<script type="text/javascript">
+
+var day_of_week = new Array();
+day_of_week[0] = "Sunday";
+day_of_week[1] = "Monday";
+day_of_week[2] = "Tuesday";
+day_of_week[3] = "Wednesday";
+day_of_week[4] = "Thursday";
+day_of_week[5] = "Friday";
+day_of_week[6] = "Saturday";
+
+var months = new Array();
+months[0] = "January";
+months[1] = "February";
+months[2] = "March";
+months[3] = "April";
+months[4] = "May";
+months[5] = "June";
+months[6] = "July";
+months[7] = "August";
+months[8] = "September";
+months[9] = "October";
+months[10] = "November";
+months[11] = "December";
+
+window.onload = function() {
+    var display = document.getElementById('the-time');
+    var epoch = 0;
+    var my_birth = new Date(1987, 3, 12, 6, 0, 0, 0).getTime();
+    var hana = (new Date).getTime() - my_birth;
+    console.log('ms in between: ' + hana);
+    epoch = my_birth + (hana * 2);
+
+    setInterval(function() {
+        epoch += 1000;
+        var now = new Date(epoch);
+        var now_text = '';
+        now_text += day_of_week[now.getDay()] + ', ';
+        now_text += months[now.getMonth()] + ' ';
+        now_text += now.getDate() + ', ';
+        now_text += now.getFullYear() + ', ';
+        var ampm = 'AM';
+        if (now.getHours() * 1 == 0) {
+            now_text += 12;
+        } else if (now.getHours() * 1 > 12) {
+            now_text += (now.getHours() - 12);
+            ampm = 'PM';
+        } else {
+            now_text += now.getHours();
+        }
+        now_text += ':';
+        if (now.getMinutes() < 10) {
+            now_text += '0';
+        }
+        now_text += now.getMinutes() + ':';
+        if (now.getSeconds() < 10) {
+            now_text += '0';
+        }
+        now_text += now.getSeconds() + ' ';
+        now_text += ampm;
+        display.innerHTML = now_text;
+    }, 500);
+}
+</script>
+</body>
+</html>
